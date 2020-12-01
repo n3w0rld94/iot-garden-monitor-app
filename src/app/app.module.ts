@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { TestChartComponent } from './pages/analytics/test-chart/test-chart.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
@@ -29,6 +31,7 @@ import { LoginComponent } from './pages/login/login.component';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,

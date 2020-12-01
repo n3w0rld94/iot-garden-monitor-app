@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import '@capacitor-community/http';
+import { Plugins } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +8,32 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   constructor() { }
+
+  async get(url: string, params: {}) {
+    const { Http } = Plugins;
+    const method = 'GET';
+    const headers = this.getHeaders(method);
+
+    const response = await Http.request({ method, url, headers, params });
+    console.log('get response: ', response);
+    return response;
+  }
+
+  async post(url: string, data: {}) {
+    const { Http } = Plugins;
+    const method = 'POST';
+    const headers = this.getHeaders(method);
+
+    const response = await Http.request({ method, url, headers, data });
+    console.log('get response: ', response);
+    return response;
+  }
+
+  private getHeaders(method: string) {
+    if (method === 'POST') {
+      return { 'Content-Type': 'application/json' };
+    }
+
+    return {};
+  }
 }
