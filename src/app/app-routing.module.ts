@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: '',
@@ -18,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'analytics',
-    component: LoginComponent,
+    component: AnalyticsComponent,
   },
 ];
 

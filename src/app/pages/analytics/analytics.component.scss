@@ -1,0 +1,30 @@
+.flex-center {
+	display: -webkit-flexbox;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	justify-content: center;
+}
+
+.analytics-header {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.analytics-content {
+	margin-top: 50px;
+}
+
+.analytics-content-header {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#charts-collection {
+	height: 100%;
+	margin: auto;
+}
