@@ -37,4 +37,4 @@ DONE!
 + ```ionic serve```:  
 Runs the app in your default browser.
 + ```ng g class models/my-class-name```:  
-Creates an interface in the __models__ folder.
+Creates a class in the __models__ folder.
