@@ -1,3 +1,19 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content" style="--side-max-width: 300px">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list id="menu-options">
+          <img src="" style="padding: 16px; height: auto; width: 80%;">
+          <ion-menu-toggle auto-hide="false" *ngFor="let page of appPages;">
+            <ion-item routerDirection="root" [routerLink]="[page.url]" routerLinkActive="selected" lines="none"
+              detail="false" [disabled]="page.requiresLogin">
+              <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ page.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
