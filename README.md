@@ -1,16 +1,20 @@
 # iot-garden-monitor-app
 IoT project
 
-All charts development will happen in the __src/app/__ folder.
+This project shows a dashboard of various charts, organised in a list fashion.
 
-An empty test chart component has already been created under __src/app/pages/analytics/test-chart/__.
+All development will happen in the __src/app/__ folder.
+
+Two models have been created under __models/__ to help visualising the kind of data used.
+
+An empty test chart component has already been created under __src/app/pages/analytics/test-chart/__ and setup in the dashboard.
 
 The charts library used is __ng2charts__. It has already been setup and it is ready to use.
 
 Please choose and implement one of the examples found in https://www.positronx.io/angular-chart-js-tutorial-with-ng2-charts-examples/
 in the __Line Chart Example in Angular 8__ section.
 
-As always, __Google__ and __Stack Overflow__ are your best friends when having a question.
+As always, __Google__ and __Stack Overflow__ are your best friends when having an issue.
 
 
 # Before You Start
@@ -32,5 +36,5 @@ DONE!
    Generates a page in the __analytics__ folder.
 + ```ionic serve```:  
 Runs the app in your default browser.
-+ ```ng g i models/my-interface-name```:  
++ ```ng g class models/my-class-name```:  
 Creates an interface in the __models__ folder.
