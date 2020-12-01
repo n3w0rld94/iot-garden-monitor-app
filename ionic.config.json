@@ -1,0 +1,7 @@
+{
+  "name": "\"Garden Monitoring App\"",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
