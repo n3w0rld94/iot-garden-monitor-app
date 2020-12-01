@@ -10,7 +10,6 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  title = 'Sign In';
 
   appPages = [
     {
@@ -46,9 +45,5 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-  }
-
-  setTitle(title: string) {
-    this.title = title;
   }
 }
