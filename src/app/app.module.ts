@@ -5,6 +5,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
@@ -26,7 +27,8 @@ import { LoginComponent } from './pages/login/login.component';
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule,
   ],
   providers: [
     StatusBar,

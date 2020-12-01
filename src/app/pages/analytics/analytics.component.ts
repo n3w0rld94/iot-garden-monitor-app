@@ -9,6 +9,7 @@ export class AnalyticsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+
+  ngOnInit() { }
 
 }
