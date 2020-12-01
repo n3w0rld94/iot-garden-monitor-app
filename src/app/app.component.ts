@@ -21,7 +21,7 @@ export class AppComponent {
       title: 'Sign In',
       url: '/login',
       icon: 'cart',
-      requiresLogin: true
+      requiresLogin: false
     },
   ];
 
