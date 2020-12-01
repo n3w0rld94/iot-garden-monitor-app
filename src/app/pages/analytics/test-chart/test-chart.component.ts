@@ -5,9 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './test-chart.component.html',
   styleUrls: ['./test-chart.component.scss'],
 })
-export class TestChartComponent implements OnInit {
+export class TestChartComponent {
 
-  constructor() { }
-
-  ngOnInit() { }
 }

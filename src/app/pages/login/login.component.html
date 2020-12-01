@@ -4,7 +4,12 @@
   </ion-toolbar>
 </ion-header>
 <div class="sign-in-card">
-  <ion-card>
+  <ion-card style="text-align: center;">
+    <ion-card-header>
+      <ion-card-title>
+        <h1> Sign In</h1>
+      </ion-card-title>
+    </ion-card-header>
     <ion-card-content>
       <form (ngSubmit)="signIn()">
         <ion-item>
@@ -15,7 +20,7 @@
           <ion-label position="floating">Password</ion-label>
           <ion-input name="password" [(ngModel)]="password" autocomplete="current-password" type="password"></ion-input>
         </ion-item>
-        <ion-button type="submit" [disabled]="!email || !password">
+        <ion-button expand="block" type="submit" style="margin-top: 20px;" [disabled]="!email || !password">
           Sign In
         </ion-button>
       </form>

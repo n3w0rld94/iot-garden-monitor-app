@@ -13,12 +13,6 @@ export class AppComponent {
 
   appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home',
-      requiresLogin: false
-    },
-    {
       title: 'Analytics',
       url: '/analytics',
       icon: 'bar-chart',
