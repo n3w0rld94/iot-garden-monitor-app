@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+  {
+    path: 'analytics',
+    component: LoginComponent,
+  },
 ];
 
 @NgModule({

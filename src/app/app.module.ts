@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AnalyticsComponent } from './pages/analytics/analytics.component';
+import { TestChartComponent } from './pages/analytics/test-chart/test-chart.component';
 import { LoginComponent } from './pages/login/login.component';
 
 
@@ -14,7 +16,9 @@ import { LoginComponent } from './pages/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    AnalyticsComponent,
+    TestChartComponent
   ],
   entryComponents: [],
   imports: [
@@ -22,7 +26,7 @@ import { LoginComponent } from './pages/login/login.component';
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

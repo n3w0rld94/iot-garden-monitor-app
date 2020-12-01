@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Platform } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-root',
@@ -10,12 +10,20 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  title = 'Sign In';
+
   appPages = [
     {
       title: 'Home',
       url: '/home',
       icon: 'home',
-      requiresLogin: true
+      requiresLogin: false
+    },
+    {
+      title: 'Analytics',
+      url: '/analytics',
+      icon: 'bar-chart',
+      requiresLogin: false
     },
     {
       title: 'Sign In',
@@ -38,5 +46,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  setTitle(title: string) {
+    this.title = title;
   }
 }
