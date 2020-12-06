@@ -16,13 +16,11 @@ export class AppComponent {
       title: 'Analytics',
       url: '/analytics',
       icon: 'bar-chart',
-      requiresLogin: false
     },
     {
       title: 'Sign In',
       url: '/login',
       icon: 'cart',
-      requiresLogin: false
     },
   ];
 

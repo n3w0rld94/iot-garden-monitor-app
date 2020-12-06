@@ -6,7 +6,7 @@
           <img src="" style="padding: 16px; height: auto; width: 80%;">
           <ion-menu-toggle auto-hide="false" *ngFor="let page of appPages;">
             <ion-item routerDirection="root" [routerLink]="[page.url]" routerLinkActive="selected" lines="none"
-              detail="false" [disabled]="page.requiresLogin">
+              detail="false">
               <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon>
               <ion-label>{{ page.title }}</ion-label>
             </ion-item>
