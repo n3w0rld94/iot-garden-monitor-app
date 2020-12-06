@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import '@capacitor-community/http';
 import { Plugins } from '@capacitor/core';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { IReading } from 'src/app/models/i-reading';
 import { firebaseConfig } from 'src/environments/environment';
 
 @Injectable({
@@ -9,7 +13,16 @@ import { firebaseConfig } from 'src/environments/environment';
 export class ApiService {
   private baseUrl = firebaseConfig.databaseURL;
 
-  constructor() { }
+  constructor(private db: AngularFireDatabase) { }
+
+  dbGet<T extends IReading>(path: string, start: Date, end: Date): Promise<T[]> {
+    return this.db.list<T>(path,
+      ref => ref
+        .orderByChild('timestamp')
+        .startAt(start.toISOString())
+        .endAt(end.toISOString()))
+      .valueChanges().pipe(first()).toPromise();
+  }
 
   async get(endpoint: string, params: {}) {
     const { Http } = Plugins;

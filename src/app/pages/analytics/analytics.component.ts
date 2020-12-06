@@ -9,6 +9,8 @@ import { TemperatureService } from 'src/app/services/temperature/temperature.ser
 })
 export class AnalyticsComponent implements OnInit {
   temperatureData: TemperatureReading[] = [] as TemperatureReading[];
+  startDate: Date;
+  endDate: Date;
 
   constructor(
     private temperatureService: TemperatureService
@@ -18,6 +20,7 @@ export class AnalyticsComponent implements OnInit {
   ngOnInit() { }
 
   async getTemperatureData() {
-    this.temperatureData = await this.temperatureService.getTeperatureData(Date.now() - 7 * 24 * 60 * 60 * 1000, Date.now());
+    this.temperatureData = await this.temperatureService
+      .getTeperatureData(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date(Date.now()));
   }
 }
