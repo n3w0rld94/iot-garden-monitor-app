@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,6 +8,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  loggedIn = false;
 
-  constructor(public router: Router) { }
+  constructor(
+    private router: Router,
+    public auth: AngularFireAuth
+  ) {
+    this.auth.user.subscribe(user => this.loggedIn = user ? true : false);
+  }
+
+  signedIn() {
+    this.router.navigate(['/analytics']);
+  }
+
+  signOut() {
+    this.auth.signOut();
+  }
 }

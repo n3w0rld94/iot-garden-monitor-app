@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
@@ -10,24 +11,28 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  loggedIn = false;
 
   appPages = [
+    {
+      title: 'Profile',
+      url: '/login',
+      icon: 'person-circle',
+      requiresLogin: false
+    },
     {
       title: 'Analytics',
       url: '/analytics',
       icon: 'bar-chart',
-    },
-    {
-      title: 'Sign In',
-      url: '/login',
-      icon: 'cart',
+      requiresLogin: true
     },
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private angularFireAuth: AngularFireAuth
   ) {
     this.initializeApp();
   }
@@ -37,5 +42,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    this.angularFireAuth.user.subscribe(response => this.loggedIn = response ? true : false);
   }
 }

@@ -3,9 +3,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Sign In</ion-title>
+    <ion-title>{{loggedIn ? "Sign Out" : "Sign In"}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <div class="sign-in-card">
-  <firebase-ui (signInSuccessWithAuthResult)="router.navigate(['/analytics']);"></firebase-ui>
+  <firebase-ui (signInSuccessWithAuthResult)="signedIn()"></firebase-ui>
+  <ion-button *ngIf="loggedIn" (click)="signOut()">Sign Out</ion-button>
 </div>

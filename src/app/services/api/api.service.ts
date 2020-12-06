@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
 import '@capacitor-community/http';
-import { Plugins } from '@capacitor/core';
-import { Observable } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { first } from 'rxjs/operators';
 import { IReading } from 'src/app/models/i-reading';
-import { firebaseConfig } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
