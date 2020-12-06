@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-import { TemperatureReading } from 'src/app/models/temperature-reading';
+import { HumidityReading } from 'src/app/models/humidity-reading';
 import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TemperatureService {
-  private endpoint = '/DHT11/Temperature';
+export class HumidityService {
+  private endpoint = '/DHT11/Humidity';
 
-  constructor(
-    private apiService: ApiService
-  ) { }
+  constructor(private apiService: ApiService) { }
 
-  async getTeperature(start: Date, end: Date): Promise<TemperatureReading[]> {
+  async getHumidity(start: Date, end: Date): Promise<HumidityReading[]> {
     const response = await this.apiService.dbGet(this.endpoint, start, end);
 
     console.log('getTeperatureData - response: ', response);
