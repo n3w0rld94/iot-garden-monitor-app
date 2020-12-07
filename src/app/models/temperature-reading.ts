@@ -1,4 +1,6 @@
-export class TemperatureReading {
-	temperature: number;
-	timestamp: string;
+import { IReading } from './i-reading';
+
+export class TemperatureReading implements IReading {
+	value: number;
+	timestamp: Date;
 }
