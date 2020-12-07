@@ -1,16 +1,44 @@
-<style>
-  h3 {text-align: center;}
-</style>
-<div class="chart-wrapper">
-  <canvas baseChart
-    [datasets]="lineChartTemperature"
-    [labels]="lineChartLabels"
-    [options]="lineChartOptions"
-    [colors]="lineChartColors"
-    [legend]="lineChartLegend"
-    [chartType]="lineChartType"
-    [plugins]="lineChartPlugins">
-  </canvas>
+<ion-toolbar>
 
-  <h3>Days of the Month</h3>
+  <ion-segment (ionChange)="modeChange($event)" value="lastWeek">
+    <ion-segment-button value="lastWeek">
+      <ion-label>Last Week</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="lastWeek">
+      <ion-label>Last Week</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="month">
+      <ion-label>Month...</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="custom">
+      <ion-label>Custom Interval...</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-item-group *ngIf="viewMode == 'custom'">
+    <ion-item>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, true)">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Date</ion-label>
+      <ion-datetime pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, false)">
+      </ion-datetime>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group *ngIf="viewMode == 'month'">
+    <ion-item>
+      <ion-label>Month</ion-label>
+      <ion-datetime [min]="'Jan'" [max]="thisMonth" pickerFormat="MMM" displayFormat="MM/YYYY"
+        (ionChange)="selectMonth($event)">
+      </ion-datetime>
+    </ion-item>
+  </ion-item-group>
+</ion-toolbar>
+
+<div class="chart-wrapper">
+  <canvas baseChart [datasets]="displayData" [labels]="chartLabels" [options]="lineChartOptions"
+    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+  </canvas>
 </div>

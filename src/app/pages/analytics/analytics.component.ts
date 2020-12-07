@@ -3,6 +3,7 @@ import { HumidityReading } from 'src/app/models/humidity-reading';
 import { TemperatureReading } from 'src/app/models/temperature-reading';
 import { HumidityService } from 'src/app/services/humidity/humidity.service';
 import { TemperatureService } from 'src/app/services/temperature/temperature.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-analytics',
@@ -35,5 +36,9 @@ export class AnalyticsComponent implements OnInit {
   async getHumidity() {
     this.humidity = await this.humidityService.getHumidity(new Date(Date.now() - this.weekMilliseconds), new Date(Date.now()));
     console.log('Humidity Data', this.humidity);
+  }
+
+  prepareLabels() {
+
   }
 }
