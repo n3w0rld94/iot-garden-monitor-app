@@ -1,12 +1,12 @@
 <ion-toolbar>
   <ion-item>
     <ion-label>Start Date</ion-label>
-    <ion-datetime pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, true)">
+    <ion-datetime [(ngModel)]="startDate" pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, true)">
     </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>End Date</ion-label>
-    <ion-datetime pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, false)">
+    <ion-datetime [(ngModel)]="endDate" pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, false)">
     </ion-datetime>
   </ion-item>
   <ion-segment [(ngModel)]="viewMode" (ionChange)="modeChange($event)">
@@ -22,11 +22,11 @@
   </ion-segment>
 </ion-toolbar>
 
-<ion-item-group *ngIf="viewMode == 'month'">
+<ion-item-group *ngIf="viewMode == 'month' || viewMode == 'day'">
   <ion-item>
-    <ion-label>Month</ion-label>
-    <ion-datetime [min]="'Jan'" [max]="thisMonth" pickerFormat="MMM" displayFormat="MM/YYYY"
-      (ionChange)="selectMonth($event)">
+    <ion-label>{{viewMode}}</ion-label>
+    <ion-datetime [(ngModel)]="selectedMonth" [min]="'2020'" [max]="thisMonth" [pickerFormat]="viewMode == 'month'? 'MMM' : 'DDD'"
+      displayFormat="MM/YYYY" (ionChange)="selectDates($event)">
     </ion-datetime>
   </ion-item>
 </ion-item-group>

@@ -15,10 +15,11 @@ export class LineChartComponent implements OnInit {
   displayData: ChartDataSets[] = [];
 
   // Date related variables
-  thisMonth = moment().format('MMM');
+  thisMonth = moment().format('YYYY-MM');
   viewMode = 'lastWeek';
-  startDate = moment().subtract(7, 'days').toDate();
-  endDate = moment().toDate();
+  startDate = moment().subtract(7, 'days').toISOString();
+  endDate = moment().toISOString();
+  selectedMonth = moment().toISOString();
 
   chartLabels: Label[] = [];
   hoursLabels: Label[] = ['01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'];
@@ -54,11 +55,8 @@ export class LineChartComponent implements OnInit {
   dateChanged(event: any, isStartDate: boolean) {
     const value = event.detail.value;
 
-    if (isStartDate) this.startDate = value ? moment(value).toDate() : value;
-    else this.startDate = value ? moment(value).toDate() : value;
-
     if (this.startDate && this.endDate) {
-      this.groupByDate();
+      // this.groupByDate();
     }
   }
 
@@ -69,20 +67,25 @@ export class LineChartComponent implements OnInit {
     if (viewMode === 'lastWeek') this.chartLabels = this.weekLabels;
     else if (viewMode === 'month') this.chartLabels = this.monthLabels;
 
-    if (viewMode !== 'month') {
-      this.startDate = null;
-      this.endDate = null;
-    }
+    // this.startDate = null;
+    // this.endDate = null;
+    this.selectedMonth = null;
   }
 
-  selectMonth(event: any) {
+  selectDates(event: any) {
     if (!event || !event.detail || !event.detail.value) return;
 
-    const month = moment(event.detail.value);
-    this.startDate = month.startOf('month').toDate();
-    this.endDate = month.endOf('month').toDate();
+    const date = moment(event.detail.value);
 
-    this.groupByDate();
+    if (this.viewMode === 'month') {
+      this.startDate = date.startOf('month').toISOString();
+      this.endDate = date.endOf('month').toISOString();
+    } else {
+      this.startDate = date.toISOString();
+      this.endDate = date.toISOString();
+    }
+
+    // this.groupByDate();
   }
 
   private groupByDate() {
@@ -96,8 +99,7 @@ export class LineChartComponent implements OnInit {
     let iterator: IReading = null;
 
     let i = this.findIndexOfFirstReadingInRange(startStamp);
-    this.fillDaysWithMissingReadings(groupDate, moment(new Date(this.data[i].timestamp)), maxDate);
-
+    if (this.fillDaysWithMissingReadings(groupDate, moment(new Date(this.data[i].timestamp)), maxDate)) return;
 
 
     for (; this.data.length; i++) {
@@ -109,17 +111,16 @@ export class LineChartComponent implements OnInit {
       if (readingDate.isSame(groupDate)) {
         accumulator += +iterator.value;
         numOfReadings++;
-      } else if (readingDate.isBefore(maxDate)) {
+      } else {
         pushReading = numOfReadings ? accumulator / numOfReadings : 0;
         this.displayData[0].data.push(pushReading);
 
         if (this.fillDaysWithMissingReadings(groupDate, readingDate, maxDate)) break;
 
+        groupDate.add(1, 'day');
         accumulator = +iterator.value;
         numOfReadings = 1;
       }
-
-      groupDate.add(1, 'day');
     }
   }
 
