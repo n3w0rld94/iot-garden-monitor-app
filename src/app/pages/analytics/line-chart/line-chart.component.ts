@@ -160,6 +160,8 @@ export class LineChartComponent implements OnInit {
   }
 
   private groupByDate() {
+    if (!this.data || !this.data.length) return;
+
     const groupDate = moment(this.startDate);
     const startStamp = groupDate.valueOf();
     const maxDate = moment(this.endDate);
@@ -172,7 +174,7 @@ export class LineChartComponent implements OnInit {
 
     let i = this.findIndexOfFirstReadingInRange(startStamp);
 
-    if (!i && i !== 0) return;
+    if (i < 0) return;
     if (this.fillDaysWithMissingReadings(groupDate, moment(new Date(this.data[i].timestamp)), maxDate, true)) return;
 
     for (; i < this.data.length; i++) {
@@ -180,7 +182,7 @@ export class LineChartComponent implements OnInit {
 
       iterator = this.data[i];
       readingDate = moment(+iterator.timestamp);
-      debugger;
+
       if (readingDate.isSame(groupDate, 'day')) {
         accumulator += +iterator.value;
         numOfReadings++;
@@ -193,7 +195,10 @@ export class LineChartComponent implements OnInit {
         accumulator = +iterator.value;
         numOfReadings = 1;
       }
+
     }
+    pushReading = numOfReadings ? accumulator / numOfReadings : 0;
+    this.displayData[0].data.push(pushReading);
   }
 
   private stopCascadePropagationToDateSelects() {
@@ -206,11 +211,10 @@ export class LineChartComponent implements OnInit {
 
     if (noReadingsDays > 0) {
       const daysLeftInInterval = max.diff(groupDate, 'days') + 1;
-      const maxIterations = Math.min(noReadingsDays, daysLeftInInterval);
+      let maxIterations = Math.min(noReadingsDays, daysLeftInInterval);
       reachedEndOfDataOrInterval = noReadingsDays > daysLeftInInterval;
-      if (setFirst) this.displayData[0].data.push(0);
 
-      for (let i = 1; i < maxIterations; i++) {
+      for (let i = setFirst? 0 : 1; i < maxIterations; i++) {
         groupDate.add(1, 'day');
         this.displayData[0].data.push(0);
       }

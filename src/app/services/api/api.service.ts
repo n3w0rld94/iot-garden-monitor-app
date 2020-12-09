@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import '@capacitor-community/http';
 import { AngularFireDatabase } from '@angular/fire/database';
+import '@capacitor-community/http';
 import { first } from 'rxjs/operators';
 import { IReading } from 'src/app/models/i-reading';
 
@@ -13,10 +13,10 @@ export class ApiService {
 
   dbGet<T extends IReading>(path: string, start: Date, end: Date): Promise<T[]> {
     return this.db.list<T>(path,
-      ref => ref
-        .orderByChild('timestamp')
-        .startAt(start.getTime())
-        .endAt(end.getTime()))
+      ref => ref.orderByChild('timestamp')
+        .startAt(String(start.getTime()))
+        .endAt(String(end.getTime()))
+    )
       .valueChanges()
       .pipe(first())
       .toPromise();

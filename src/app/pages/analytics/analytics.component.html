@@ -15,7 +15,7 @@
       <ion-card-header class="analytics-header">
         <ion-card-title>Temperature</ion-card-title>
       </ion-card-header>
-      <app-test-chart></app-test-chart>
+      <app-test-chart [data]="temperature"></app-test-chart>
       <ion-card-content class="analytics-content">
         <h1 class="analytics-content-header">Description</h1>
       </ion-card-content>
@@ -24,7 +24,7 @@
       <ion-card-header class="analytics-header">
         <ion-card-title>% Humidity</ion-card-title>
       </ion-card-header>
-      <app-test-chart></app-test-chart>
+      <app-test-chart [data]="humidity"></app-test-chart>
       <ion-card-content class="analytics-content">
         <h1 class="analytics-content-header">Description</h1>
       </ion-card-content>

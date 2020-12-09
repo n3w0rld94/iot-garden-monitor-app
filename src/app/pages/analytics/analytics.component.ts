@@ -29,12 +29,12 @@ export class AnalyticsComponent implements OnInit {
   }
 
   async getTemperature() {
-    this.temperature = await this.temperatureService.getTeperature(new Date(Date.now() - this.weekMilliseconds), new Date(Date.now()));
+    this.temperature = await this.temperatureService.getTeperature(moment().startOf('year').toDate(), new Date(Date.now()));
     console.log('Temperature Data', this.temperature);
   }
 
   async getHumidity() {
-    this.humidity = await this.humidityService.getHumidity(new Date(Date.now() - this.weekMilliseconds), new Date(Date.now()));
+    this.humidity = await this.humidityService.getHumidity(moment().startOf('year').toDate(), moment().toDate());
     console.log('Humidity Data', this.humidity);
   }
 
