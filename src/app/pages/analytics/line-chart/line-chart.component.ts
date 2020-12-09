@@ -13,16 +13,8 @@ import { IReading } from 'src/app/models/i-reading';
 export class LineChartComponent implements OnInit {
   @Input() data: IReading[] = [
     {
-      value: 13,
-      timestamp: moment().valueOf() - 10000
-    },
-    {
-      value: 10,
-      timestamp: moment().valueOf() - 20000
-    },
-    {
       value: 12,
-      timestamp: moment().valueOf() - 3600000
+      timestamp: moment().valueOf() - 1000 * 60 * 60 * 24 + 100000
     },
     {
       value: 12,
@@ -30,7 +22,15 @@ export class LineChartComponent implements OnInit {
     },
     {
       value: 12,
-      timestamp: moment().valueOf() - 1000 * 60 * 60 * 24 + 100000
+      timestamp: moment().valueOf() - 3600000
+    },
+    {
+      value: 10,
+      timestamp: moment().valueOf() - 20000
+    },
+    {
+      value: 13,
+      timestamp: moment().valueOf() - 10000
     },
     {
       value: 12,
@@ -173,23 +173,21 @@ export class LineChartComponent implements OnInit {
     let i = this.findIndexOfFirstReadingInRange(startStamp);
 
     if (!i && i !== 0) return;
-    if (this.fillDaysWithMissingReadings(groupDate, moment(new Date(this.data[i].timestamp)), maxDate)) return;
-
+    if (this.fillDaysWithMissingReadings(groupDate, moment(new Date(this.data[i].timestamp)), maxDate, true)) return;
 
     for (; i < this.data.length; i++) {
       if (groupDate.isAfter(maxDate)) break;
 
       iterator = this.data[i];
-      readingDate = moment(new Date(iterator.timestamp));
-
-      if (readingDate.isSame(groupDate)) {
+      readingDate = moment(+iterator.timestamp);
+      debugger;
+      if (readingDate.isSame(groupDate, 'day')) {
         accumulator += +iterator.value;
         numOfReadings++;
       } else {
         pushReading = numOfReadings ? accumulator / numOfReadings : 0;
         this.displayData[0].data.push(pushReading);
-
-        if (this.fillDaysWithMissingReadings(groupDate, readingDate, maxDate)) break;
+        if (this.fillDaysWithMissingReadings(groupDate, readingDate, maxDate, false)) break;
 
         groupDate.add(1, 'day');
         accumulator = +iterator.value;
@@ -202,14 +200,15 @@ export class LineChartComponent implements OnInit {
     this.ignoreCount = 2;
   }
 
-  private fillDaysWithMissingReadings(groupDate: moment.Moment, readingDate: moment.Moment, max: moment.Moment): boolean {
+  private fillDaysWithMissingReadings(groupDate: moment.Moment, readingDate: moment.Moment, max: moment.Moment, setFirst: boolean): boolean {
     const noReadingsDays = readingDate.diff(groupDate, 'day');
     let reachedEndOfDataOrInterval = false;
 
     if (noReadingsDays > 0) {
-      const daysLeftInInterval = max.diff(groupDate, 'days');
+      const daysLeftInInterval = max.diff(groupDate, 'days') + 1;
       const maxIterations = Math.min(noReadingsDays, daysLeftInInterval);
-      reachedEndOfDataOrInterval = noReadingsDays >= daysLeftInInterval;
+      reachedEndOfDataOrInterval = noReadingsDays > daysLeftInInterval;
+      if (setFirst) this.displayData[0].data.push(0);
 
       for (let i = 1; i < maxIterations; i++) {
         groupDate.add(1, 'day');
