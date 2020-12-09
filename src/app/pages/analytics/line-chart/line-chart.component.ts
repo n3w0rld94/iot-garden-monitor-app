@@ -11,12 +11,57 @@ import { IReading } from 'src/app/models/i-reading';
 })
 
 export class LineChartComponent implements OnInit {
-  @Input() data: IReading[];
-  displayData: ChartDataSets[] = [];
+  @Input() data: IReading[] = [
+    {
+      value: 13,
+      timestamp: moment().valueOf() - 10000
+    },
+    {
+      value: 10,
+      timestamp: moment().valueOf() - 20000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf() - 3600000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf() - 3600000 + 100000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf() - 1000 * 60 * 60 * 24 + 100000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf()
+    },
+    {
+      value: 13,
+      timestamp: moment().valueOf() + 10000
+    },
+    {
+      value: 10,
+      timestamp: moment().valueOf() + 20000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf() + 3600000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf() + 3600000 + 100000
+    },
+    {
+      value: 12,
+      timestamp: moment().valueOf() + 1000 * 60 * 60 * 24 + 100000
+    },
+  ];
+  displayData: ChartDataSets[] = [{ data: [], label: 'Readings' }];
 
   // Date related variables
   thisMonth = moment().format('YYYY-MM');
-  viewMode = 'lastWeek';
+  viewMode: 'lastWeek' | 'month' | 'day';
   startDate = moment().subtract(7, 'days').toISOString();
   endDate = moment().toISOString();
   selectedMonth = moment().toISOString();
@@ -39,70 +84,99 @@ export class LineChartComponent implements OnInit {
   lineChartPlugins = [];
   lineChartType = 'line';
 
+  // Change events regulation
+  ignoreCount = 0;
 
   ngOnInit() {
-    for (let i = 0; i < moment().daysInMonth(); i++) {
-      this.monthLabels.push(String(i + 1));
-    }
+    this.setMonthLabels(moment(this.selectedMonth).startOf('month'), moment(this.selectedMonth).endOf('month'));
+    this.setLastWeekLabels();
 
-    for (let i = 0; i < 7; i++) {
-      this.weekLabels.push(moment().format('DDDD'));
-    }
-
+    this.viewMode = 'lastWeek';
     this.chartLabels = this.weekLabels;
+    this.groupByDate();
   }
 
-  dateChanged(event: any, isStartDate: boolean) {
-    const value = event.detail.value;
+  setMonthLabels(start: moment.Moment, end: moment.Moment) {
+    const days = end.diff(start, 'days') + 1;
+    let labelIterator = +start.format('DD');
+    let endLabel = end.format('DD');
+    if (this.monthLabels[0] == String(labelIterator) && this.monthLabels[this.monthLabels.length - 1] == endLabel) return;
+    this.monthLabels = [];
 
-    if (this.startDate && this.endDate) {
-      // this.groupByDate();
+    for (let i = 0; i < days; i++, labelIterator++)
+      this.monthLabels.push(String(labelIterator));
+  }
+
+  setLastWeekLabels() {
+    const iterator = moment().subtract(7, 'days');
+    this.weekLabels = [];
+
+    this.weekLabels.push(iterator.format('DD/MM'));
+    for (let i = 0; i < 7; i++)
+      this.weekLabels.push(iterator.add(1, 'days').format('DD/MM'));
+  }
+
+  dateChanged(event: any) {
+    if (this.ignoreCount !== 0) this.ignoreCount--;
+    else {
+      this.selectedMonth = null;
+      if (this.startDate && this.endDate) {
+        this.groupByDate();
+        this.setMonthLabels(moment(this.startDate), moment(this.endDate));
+        this.chartLabels = [...this.monthLabels];
+      }
     }
   }
 
   modeChange(event: any) {
     if (!event || !event.detail || !event.detail.value) return;
-
     const viewMode = event.detail.value;
-    if (viewMode === 'lastWeek') this.chartLabels = this.weekLabels;
-    else if (viewMode === 'month') this.chartLabels = this.monthLabels;
 
-    // this.startDate = null;
-    // this.endDate = null;
-    this.selectedMonth = null;
+    if (viewMode === 'lastWeek') {
+      this.stopCascadePropagationToDateSelects();
+      this.startDate = moment().subtract(7, 'days').toISOString();
+      this.endDate = moment().toISOString();
+      this.chartLabels = this.weekLabels;
+      this.groupByDate();
+    }
   }
 
-  selectDates(event: any) {
+  selectDates(event: Event & { detail: { value: any } }) {
     if (!event || !event.detail || !event.detail.value) return;
-
     const date = moment(event.detail.value);
 
+    this.stopCascadePropagationToDateSelects();
     if (this.viewMode === 'month') {
       this.startDate = date.startOf('month').toISOString();
-      this.endDate = date.endOf('month').toISOString();
+      this.endDate = date.clone().endOf('month').toISOString();
+      this.setMonthLabels(date.startOf('month'), date.clone().endOf('month'));
+      this.chartLabels = this.monthLabels;
     } else {
       this.startDate = date.toISOString();
       this.endDate = date.toISOString();
     }
 
-    // this.groupByDate();
+    this.groupByDate();
   }
 
   private groupByDate() {
     const groupDate = moment(this.startDate);
-    const startStamp = groupDate.unix();
+    const startStamp = groupDate.valueOf();
     const maxDate = moment(this.endDate);
     let readingDate: moment.Moment = null;
     let accumulator = 0;
     let numOfReadings = 0;
     let pushReading = 0;
     let iterator: IReading = null;
+    this.displayData[0].data = [];
 
     let i = this.findIndexOfFirstReadingInRange(startStamp);
+
+    if (!i && i !== 0) return;
     if (this.fillDaysWithMissingReadings(groupDate, moment(new Date(this.data[i].timestamp)), maxDate)) return;
 
 
-    for (; this.data.length; i++) {
+    for (; i < this.data.length; i++) {
       if (groupDate.isAfter(maxDate)) break;
 
       iterator = this.data[i];
@@ -124,22 +198,26 @@ export class LineChartComponent implements OnInit {
     }
   }
 
+  private stopCascadePropagationToDateSelects() {
+    this.ignoreCount = 2;
+  }
+
   private fillDaysWithMissingReadings(groupDate: moment.Moment, readingDate: moment.Moment, max: moment.Moment): boolean {
-    const noReadingsDays = groupDate.diff(readingDate, 'days');
+    const noReadingsDays = readingDate.diff(groupDate, 'day');
+    let reachedEndOfDataOrInterval = false;
 
     if (noReadingsDays > 0) {
-      const maxDays = groupDate.diff(max, 'days');
-      let i = 1;
+      const daysLeftInInterval = max.diff(groupDate, 'days');
+      const maxIterations = Math.min(noReadingsDays, daysLeftInInterval);
+      reachedEndOfDataOrInterval = noReadingsDays >= daysLeftInInterval;
 
-      for (i = 1; i < noReadingsDays && i < maxDays; i++) {
+      for (let i = 1; i < maxIterations; i++) {
         groupDate.add(1, 'day');
         this.displayData[0].data.push(0);
       }
-
-      return i >= maxDays;
     }
 
-    return false;
+    return reachedEndOfDataOrInterval;
   }
 
   findIndexOfFirstReadingInRange(startStamp: number): number {
