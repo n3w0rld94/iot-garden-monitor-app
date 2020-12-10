@@ -11,8 +11,8 @@ import * as moment from 'moment';
   styleUrls: ['./analytics.component.scss'],
 })
 export class AnalyticsComponent implements OnInit {
-  temperature: TemperatureReading[] = [] as TemperatureReading[];
-  humidity: HumidityReading[] = [] as HumidityReading[];
+  temperature: TemperatureReading[] = null;
+  humidity: HumidityReading[] = null;
   startDate: Date;
   endDate: Date;
   weekMilliseconds = 7 * 24 * 60 * 60 * 1000;
@@ -24,12 +24,11 @@ export class AnalyticsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getTemperature();
-    this.getHumidity();
+    this.refresh();
   }
 
   async getTemperature() {
-    this.temperature = await this.temperatureService.getTeperature(moment().startOf('year').toDate(), new Date(Date.now()));
+    this.temperature = await this.temperatureService.getTemperature(moment().startOf('year').toDate(), moment().toDate());
     console.log('Temperature Data', this.temperature);
   }
 
@@ -38,7 +37,8 @@ export class AnalyticsComponent implements OnInit {
     console.log('Humidity Data', this.humidity);
   }
 
-  prepareLabels() {
-
+  async refresh() {
+    this.getTemperature();
+    this.getHumidity();
   }
 }

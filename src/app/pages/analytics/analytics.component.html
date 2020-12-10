@@ -4,39 +4,36 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Analytics</ion-title>
-    <ion-button (click)="getTemperature()" slot="end">Refresh</ion-button>
+    <ion-button (click)="refresh()" slot="end">Refresh</ion-button>
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content>
+<ng-template #loader>
+  <div id="loader-container"></div>
+  <div id="csJobCostingLoader" class="loader">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+</ng-template>
+<ion-content *ngIf="temperature && humidity; else loader">
   <div id="charts-collection">
     <ion-card id="chart1">
       <ion-card-header class="analytics-header">
         <ion-card-title>Temperature</ion-card-title>
       </ion-card-header>
       <app-test-chart [data]="temperature"></app-test-chart>
-      <ion-card-content class="analytics-content">
-        <h1 class="analytics-content-header">Description</h1>
-      </ion-card-content>
     </ion-card>
     <ion-card id="chart2">
       <ion-card-header class="analytics-header">
         <ion-card-title>% Humidity</ion-card-title>
       </ion-card-header>
       <app-test-chart [data]="humidity"></app-test-chart>
-      <ion-card-content class="analytics-content">
-        <h1 class="analytics-content-header">Description</h1>
-      </ion-card-content>
     </ion-card>
     <ion-card id="chart3">
       <ion-card-header class="analytics-header">
         <ion-card-title>Moisture</ion-card-title>
       </ion-card-header>
       <app-test-chart></app-test-chart>
-      <ion-card-content class="analytics-content">
-        <h1 class="analytics-content-header">Description</h1>
-      </ion-card-content>
     </ion-card>
   </div>
 </ion-content>

@@ -179,7 +179,7 @@ export class LineChartComponent implements OnInit {
 
     for (; i < this.data.length; i++) {
       if (groupDate.isAfter(maxDate)) break;
-
+      
       iterator = this.data[i];
       readingDate = moment(+iterator.timestamp);
 
@@ -214,7 +214,7 @@ export class LineChartComponent implements OnInit {
       let maxIterations = Math.min(noReadingsDays, daysLeftInInterval);
       reachedEndOfDataOrInterval = noReadingsDays > daysLeftInInterval;
 
-      for (let i = setFirst? 0 : 1; i < maxIterations; i++) {
+      for (let i = setFirst ? 0 : 1; i < maxIterations; i++) {
         groupDate.add(1, 'day');
         this.displayData[0].data.push(0);
       }
