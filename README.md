@@ -11,10 +11,11 @@ A chart component has been created under __src/app/pages/analytics/line-chart/__
 
 The charts library used is __ng2charts__. It is based on _chart.js_ which allows fine control of charts generation.
 
+A guard against unauthorised navigation has been setup in _src/app/guards_ to restrict access without login.
 
+firebase setup is done in _src/app/app.module.ts and the configuration data is in the _src/environments_
 
 The first step is to clone this repo:
-
 1. Open the Windows command prompt in the folder were you wish to pull the project.
 2. Run _```git clone https://github.com/n3w0rld94/iot-garden-monitor-app.git```_
 
