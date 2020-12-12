@@ -12,7 +12,7 @@ export class TemperatureService {
     private apiService: ApiService
   ) { }
 
-  async getTeperature(start: Date, end: Date): Promise<TemperatureReading[]> {
+  async getTemperature(start: Date, end: Date): Promise<TemperatureReading[]> {
     const response = (await this.apiService.dbGet(this.endpoint, start, end)).map(
       reading => {
         reading.timestamp = +reading.timestamp * 1000;
