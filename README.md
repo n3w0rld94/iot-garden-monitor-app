@@ -34,9 +34,9 @@ Next, to install all the necessary dependencies:
 To create a branch and start the development:  
 
 1. Run ```git checkout -b 'name-of-your-branch'``` to create a new development branch locally.
-2. Click on the cloud icon appearing on the bottom left corner of VSCode to create your branch also upstream (in the remote repository).
+2. Click on the cloud icon appearing on the bottom left corner of VSCode to create a branch also upstream (in the remote repository).
 
->__NOTE:__ It is important that you follow these steps as you will not be able to commit your changes otherwise.
+>__NOTE:__ It is important to follow these steps as it will not be possible to commit changes otherwise.
 
 
 
@@ -50,11 +50,11 @@ They are meant to be executed in the vscode integrated terminal (_Terminal -> Ne
 + ```ng g c pages/analytics/my-component-name --module=app.module.ts```:  
    Generates a page in the __analytics__ folder.
 + ```ionic serve```:  
-Runs the app in your default browser.
+Runs the app in the default browser.
 + ```ng g class models/my-class-name```:  
 Creates a class in the __models__ folder.
 
->__NOTE:__ If any of these commands doesn't work, make sure you are in the project folder.
+>__NOTE:__ If any of these commands doesn't work, make sure to be in the project folder.
 
 # Device testing
 This app has been build with _Ionic Capacitor_. For more information see *_https://ionicframework.com/docs/cli/commands/capacitor-run_*.
