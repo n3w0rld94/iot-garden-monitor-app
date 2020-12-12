@@ -55,3 +55,6 @@ Runs the app in your default browser.
 Creates a class in the __models__ folder.
 
 >__NOTE:__ If any of these commands doesn't work, make sure you are in the project folder.
+
+# Device testing
+This app has been build with _Ionic Capacitor_. For more information see *_https://ionicframework.com/docs/cli/commands/capacitor-run_*.
