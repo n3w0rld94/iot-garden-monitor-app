@@ -5,19 +5,17 @@ This project shows a dashboard of various charts, organised in a list fashion.
 
 All development will happen in the __src/app/__ folder.
 
-Two models have been created under __models/__ to help visualising the kind of data used.
+Models have been created under __models/__ to help visualising the kind of data used.
 
-An empty test chart component has already been created under __src/app/pages/analytics/test-chart/__ and setup in the dashboard.
+A chart component has been created under __src/app/pages/analytics/line-chart/__ and setup in the _analytics.component_ dashboard.
 
-The charts library used is __ng2charts__. It has already been setup and it is ready to use.
+The charts library used is __ng2charts__. It is based on _chart.js_ which allows fine control of charts generation.
 
-Please choose and implement one of the examples found in https://www.positronx.io/angular-chart-js-tutorial-with-ng2-charts-examples/
-in the __Line Chart Example in Angular 8__ section.
+A guard against unauthorised navigation has been setup in _src/app/guards_ to restrict access without login.
 
-As always, __Google__ and __Stack Overflow__ are your best friends when having an issue.
+firebase setup is done in _src/app/app.module.ts and the configuration data is in the _src/environments_
 
 The first step is to clone this repo:
-
 1. Open the Windows command prompt in the folder were you wish to pull the project.
 2. Run _```git clone https://github.com/n3w0rld94/iot-garden-monitor-app.git```_
 
@@ -57,3 +55,6 @@ Runs the app in your default browser.
 Creates a class in the __models__ folder.
 
 >__NOTE:__ If any of these commands doesn't work, make sure you are in the project folder.
+
+# Device testing
+This app has been build with _Ionic Capacitor_. For more information see *_https://ionicframework.com/docs/cli/commands/capacitor-run_*.

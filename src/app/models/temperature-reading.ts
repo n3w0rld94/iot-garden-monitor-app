@@ -2,5 +2,5 @@ import { IReading } from './i-reading';
 
 export class TemperatureReading implements IReading {
 	value: number;
-	timestamp: Date;
+	timestamp: number;
 }

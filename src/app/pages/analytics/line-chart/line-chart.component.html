@@ -1,0 +1,38 @@
+<ion-toolbar>
+  <ion-item>
+    <ion-label>Start Date</ion-label>
+    <ion-datetime [(ngModel)]="startDate" pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, true)">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>End Date</ion-label>
+    <ion-datetime [(ngModel)]="endDate" pickerFormat="DD/MMM" displayFormat="DD/MM/YYYY" (ionChange)="dateChanged($event, false)">
+    </ion-datetime>
+  </ion-item>
+  <ion-segment [(ngModel)]="viewMode" (ionChange)="modeChange($event)">
+    <ion-segment-button value="lastWeek">
+      <ion-label>Last Week</ion-label>
+    </ion-segment-button>
+    <!-- <ion-segment-button value="day">
+      <ion-label>Day</ion-label>
+    </ion-segment-button> -->
+    <ion-segment-button value="month">
+      <ion-label>Month...</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-item-group *ngIf="viewMode == 'month' || viewMode == 'day'">
+  <ion-item>
+    <ion-label>{{viewMode}}</ion-label>
+    <ion-datetime [(ngModel)]="selectedMonth" [min]="'2020'" [max]="thisMonth" [pickerFormat]="viewMode == 'month'? 'MMM' : 'DD'"
+      displayFormat="MM/YYYY" (ionChange)="selectDates($event)">
+    </ion-datetime>
+  </ion-item>
+</ion-item-group>
+
+<div class="chart-wrapper">
+  <canvas baseChart [datasets]="displayData" [labels]="chartLabels" [options]="lineChartOptions"
+    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+  </canvas>
+</div>

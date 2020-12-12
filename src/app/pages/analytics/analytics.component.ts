@@ -3,6 +3,7 @@ import { HumidityReading } from 'src/app/models/humidity-reading';
 import { TemperatureReading } from 'src/app/models/temperature-reading';
 import { HumidityService } from 'src/app/services/humidity/humidity.service';
 import { TemperatureService } from 'src/app/services/temperature/temperature.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-analytics',
@@ -10,8 +11,8 @@ import { TemperatureService } from 'src/app/services/temperature/temperature.ser
   styleUrls: ['./analytics.component.scss'],
 })
 export class AnalyticsComponent implements OnInit {
-  temperature: TemperatureReading[] = [] as TemperatureReading[];
-  humidity: HumidityReading[] = [] as HumidityReading[];
+  temperature: TemperatureReading[] = null;
+  humidity: HumidityReading[] = null;
   startDate: Date;
   endDate: Date;
   weekMilliseconds = 7 * 24 * 60 * 60 * 1000;
@@ -23,17 +24,21 @@ export class AnalyticsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getTemperature();
-    this.getHumidity();
+    this.refresh();
   }
 
   async getTemperature() {
-    this.temperature = await this.temperatureService.getTeperature(new Date(Date.now() - this.weekMilliseconds), new Date(Date.now()));
+    this.temperature = await this.temperatureService.getTemperature(moment().startOf('year').toDate(), moment().toDate());
     console.log('Temperature Data', this.temperature);
   }
 
   async getHumidity() {
-    this.humidity = await this.humidityService.getHumidity(new Date(Date.now() - this.weekMilliseconds), new Date(Date.now()));
+    this.humidity = await this.humidityService.getHumidity(moment().startOf('year').toDate(), moment().toDate());
     console.log('Humidity Data', this.humidity);
+  }
+
+  async refresh() {
+    this.getTemperature();
+    this.getHumidity();
   }
 }

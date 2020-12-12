@@ -15,7 +15,7 @@ import { environment, firebaseConfig } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
-import { TestChartComponent } from './pages/analytics/test-chart/test-chart.component';
+import { LineChartComponent } from './pages/analytics/line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
 
 
@@ -41,7 +41,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AppComponent,
     LoginComponent,
     AnalyticsComponent,
-    TestChartComponent
+    LineChartComponent
   ],
   entryComponents: [],
   imports: [
