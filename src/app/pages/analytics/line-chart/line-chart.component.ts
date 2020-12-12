@@ -11,52 +11,7 @@ import { IReading } from 'src/app/models/i-reading';
 })
 
 export class LineChartComponent implements OnInit {
-  @Input() data: IReading[] = [
-    {
-      value: 12,
-      timestamp: moment().valueOf() - 1000 * 60 * 60 * 24 + 100000
-    },
-    {
-      value: 12,
-      timestamp: moment().valueOf() - 3600000 + 100000
-    },
-    {
-      value: 12,
-      timestamp: moment().valueOf() - 3600000
-    },
-    {
-      value: 10,
-      timestamp: moment().valueOf() - 20000
-    },
-    {
-      value: 13,
-      timestamp: moment().valueOf() - 10000
-    },
-    {
-      value: 12,
-      timestamp: moment().valueOf()
-    },
-    {
-      value: 13,
-      timestamp: moment().valueOf() + 10000
-    },
-    {
-      value: 10,
-      timestamp: moment().valueOf() + 20000
-    },
-    {
-      value: 12,
-      timestamp: moment().valueOf() + 3600000
-    },
-    {
-      value: 12,
-      timestamp: moment().valueOf() + 3600000 + 100000
-    },
-    {
-      value: 12,
-      timestamp: moment().valueOf() + 1000 * 60 * 60 * 24 + 100000
-    },
-  ];
+  @Input() data: IReading[] = [];
   displayData: ChartDataSets[] = [{ data: [], label: 'Readings' }];
 
   // Date related variables
@@ -179,7 +134,7 @@ export class LineChartComponent implements OnInit {
 
     for (; i < this.data.length; i++) {
       if (groupDate.isAfter(maxDate)) break;
-      
+
       iterator = this.data[i];
       readingDate = moment(+iterator.timestamp);
 

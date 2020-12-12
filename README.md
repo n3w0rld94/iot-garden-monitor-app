@@ -5,16 +5,13 @@ This project shows a dashboard of various charts, organised in a list fashion.
 
 All development will happen in the __src/app/__ folder.
 
-Two models have been created under __models/__ to help visualising the kind of data used.
+Models have been created under __models/__ to help visualising the kind of data used.
 
-An empty test chart component has already been created under __src/app/pages/analytics/test-chart/__ and setup in the dashboard.
+A chart component has been created under __src/app/pages/analytics/line-chart/__ and setup in the _analytics.component_ dashboard.
 
-The charts library used is __ng2charts__. It has already been setup and it is ready to use.
+The charts library used is __ng2charts__. It is based on _chart.js_ which allows fine control of charts generation.
 
-Please choose and implement one of the examples found in https://www.positronx.io/angular-chart-js-tutorial-with-ng2-charts-examples/
-in the __Line Chart Example in Angular 8__ section.
 
-As always, __Google__ and __Stack Overflow__ are your best friends when having an issue.
 
 The first step is to clone this repo:
 
